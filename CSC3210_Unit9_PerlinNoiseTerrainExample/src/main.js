@@ -23,9 +23,19 @@ var stats = new Stats();
 stats.showPanel( 0 );
 document.body.appendChild( stats.dom );
 
-var light = new THREE.DirectionalLight(Colors.LightColor, 1.3);
-light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
-scene.add(light);
+// var light = new THREE.DirectionalLight(Colors.LightColor, 1.3);
+// light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
+// scene.add(light);
+
+//creating the sun
+const sun = new THREE.PointLight(0xFDB813, 10, 0);
+sun.position.set(50,50,50);
+scene.add(sun);
+
+//creating the moon
+const moon = new THREE.PointLight(0xF6F1D5, 10, 0);
+moon.position.set(-50,-50,-50);
+scene.add(moon);
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
