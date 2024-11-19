@@ -1,18 +1,17 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*jshint esversion: 6 */
 const Palette = {
-    // Pink: 0xe64386,
-    // Beige: 0xf6d7bd,
-    // Teal: 0x035e79,
-    LightBrown: 0xC4A484,
-    LightGreen: 0x90EE90,
-    DarkGreen: 0x013220
+    Pink: 0xe64386,
+    SkyBlue: 0x87CEEB,
+    Orange: 0xFF9913,
+    CetaceanBlue: 0x070b34
 };
 
 const Colors = {
-    BackgroundColor: Palette.LightBrown,
-    LightColor: Palette.LightGreen,
-    TerrainColor: Palette.DarkGreen
+    DayColor: Palette.LightBlue,
+    DawnColor: Palette.Orange,
+    DuskColor: Palette.Pink,
+    NightColor: Palette.CetaceanBlue
 };
 
 exports.Colors = Colors;
@@ -33,7 +32,7 @@ camera.position.z = 1000;
 camera.rotation.x = -15 * Math.PI / 180;
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(Colors.BackgroundColor);
+renderer.setClearColor(Colors.DayColor);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( width, height );
 document.body.appendChild( renderer.domElement );
@@ -42,9 +41,37 @@ var stats = new Stats();
 stats.showPanel( 0 );
 document.body.appendChild( stats.dom );
 
-var light = new THREE.DirectionalLight(Colors.LightColor, 1.3);
-light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
-scene.add(light);
+// var light = new THREE.DirectionalLight(Colors.LightColor, 1.3);
+// light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
+// scene.add(light);
+
+const sun = new THREE.SpotLight(0xFDB813);
+sun.position.set(100, 1000, 100);
+
+sun.castShadow = true;
+
+// sun.shadow.mapSize.width = 1024;
+// sun.shadow.mapSize.height = 1024;
+
+// sun.shadow.camera.near = 500;
+// sun.shadow.camera.far = 4000;
+// sun.shadow.camera.fov = 30;
+scene.add(sun);
+
+//creating the moon
+const moon = new THREE.SpotLight(0xF6F1D5);
+moon.position.set(-50,-50,-50);
+
+moon.castShadow = true;
+
+// moon.shadow.mapSize.width = 1024;
+// moon.shadow.mapSize.height = 1024;
+
+// moon.shadow.camera.near = 500;
+// moon.shadow.camera.far = 4000;
+// moon.shadow.camera.fov = 30;
+
+scene.add(moon);
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );

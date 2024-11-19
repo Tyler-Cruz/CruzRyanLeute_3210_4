@@ -1,3 +1,5 @@
+const { textureLoad } = require('three/webgpu');
+
 /*jshint esversion: 6 */
 const Colors = require('./colors.js').Colors;
 const Perlin = require('./perlin.js').Perlin;
@@ -14,7 +16,7 @@ camera.position.z = 1000;
 camera.rotation.x = -15 * Math.PI / 180;
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(Colors.BackgroundColor);
+renderer.setClearColor(Colors.SkyColor);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( width, height );
 document.body.appendChild( renderer.domElement );
@@ -23,19 +25,8 @@ var stats = new Stats();
 stats.showPanel( 0 );
 document.body.appendChild( stats.dom );
 
-// var light = new THREE.DirectionalLight(Colors.LightColor, 1.3);
-// light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
-// scene.add(light);
 
-//creating the sun
-const sun = new THREE.PointLight(0xFDB813, 10, 0);
-sun.position.set(50,50,50);
-scene.add(sun);
 
-//creating the moon
-const moon = new THREE.PointLight(0xF6F1D5, 10, 0);
-moon.position.set(-50,-50,-50);
-scene.add(moon);
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
@@ -61,10 +52,18 @@ function refreshVertices() {
 
 var clock = new THREE.Clock();
 var movementSpeed = 60;
+var currTime = 0; //time of the cycle
 function update() {
     var delta = clock.getDelta();
     terrain.position.z += movementSpeed * delta;
     camera.position.z += movementSpeed * delta;
+    //moves sun and mood via delta time
+    //sun.position.
+    currTime = currTime + delta;
+    sun.position.x = movementSpeed + currTime;
+    sun.position.y = movementSpeed + currTime;
+
+
     refreshVertices();
 }
 
