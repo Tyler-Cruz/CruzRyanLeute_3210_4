@@ -140,7 +140,7 @@ terrain.rotation.x = -Math.PI / 2;
 scene.add( terrain );
 
 var perlin = new Perlin();
-var peak = 60;
+var peak = 20;
 var smoothing = 300;
 function refreshVertices() {
     var vertices = terrain.geometry.attributes.position.array;
