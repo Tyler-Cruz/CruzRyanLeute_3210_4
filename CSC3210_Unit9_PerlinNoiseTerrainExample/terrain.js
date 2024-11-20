@@ -154,12 +154,22 @@ function refreshVertices() {
     terrain.geometry.computeVertexNormals();
 }
 
+// central dot 
+const dot = document.createElement('div');
+dot.style.position = 'absolute';
+dot.style.width = '8px';
+dot.style.height = '8px';
+dot.style.backgroundColor = 'white';
+dot.style.borderRadius = '50%';
+dot.style.left = '50%';
+dot.style.top = '50%';
+dot.style.transform = 'translate(-50%, -50%)';
+document.body.appendChild(dot);
+
 var clock = new THREE.Clock();
 var movementSpeed = 60;
 function update() {
     var delta = clock.getDelta();
-    terrain.position.z += movementSpeed * delta;
-    camera.position.z += movementSpeed * delta;
     refreshVertices();
 
     updateTrees(delta);

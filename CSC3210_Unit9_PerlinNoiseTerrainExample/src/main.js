@@ -55,8 +55,6 @@ var movementSpeed = 60;
 var currTime = 0; //time of the cycle
 function update() {
     var delta = clock.getDelta();
-    terrain.position.z += movementSpeed * delta;
-    camera.position.z += movementSpeed * delta;
     //moves sun and mood via delta time
     //sun.position.
     currTime = currTime + delta;
