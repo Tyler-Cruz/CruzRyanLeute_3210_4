@@ -134,13 +134,13 @@ addTreesToTerrain(1000);
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
-var material = new THREE.MeshLambertMaterial({color: Colors.TerrainColor});
+var material = new THREE.MeshLambertMaterial('grass.jpg');
 var terrain = new THREE.Mesh( geometry, material );
 terrain.rotation.x = -Math.PI / 2;
 scene.add( terrain );
 
 var perlin = new Perlin();
-var peak = 60;
+var peak = 20;
 var smoothing = 300;
 function refreshVertices() {
     var vertices = terrain.geometry.attributes.position.array;
