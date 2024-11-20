@@ -50,12 +50,12 @@ sun.position.set(100, 1000, 100);
 
 sun.castShadow = true;
 
-// sun.shadow.mapSize.width = 1024;
-// sun.shadow.mapSize.height = 1024;
+sun.shadow.mapSize.width = 1024;
+sun.shadow.mapSize.height = 1024;
 
-// sun.shadow.camera.near = 500;
-// sun.shadow.camera.far = 4000;
-// sun.shadow.camera.fov = 30;
+sun.shadow.camera.near = 500;
+sun.shadow.camera.far = 4000;
+sun.shadow.camera.fov = 30;
 scene.add(sun);
 
 //creating the moon
@@ -64,12 +64,12 @@ moon.position.set(-50,-50,-50);
 
 moon.castShadow = true;
 
-// moon.shadow.mapSize.width = 1024;
-// moon.shadow.mapSize.height = 1024;
+moon.shadow.mapSize.width = 1024;
+moon.shadow.mapSize.height = 1024;
 
-// moon.shadow.camera.near = 500;
-// moon.shadow.camera.far = 4000;
-// moon.shadow.camera.fov = 30;
+moon.shadow.camera.near = 500;
+moon.shadow.camera.far = 4000;
+moon.shadow.camera.fov = 30;
 
 scene.add(moon);
 

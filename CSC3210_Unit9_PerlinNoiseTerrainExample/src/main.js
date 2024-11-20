@@ -60,8 +60,8 @@ function update() {
     //moves sun and mood via delta time
     //sun.position.
     currTime = currTime + delta;
-    sun.position.x = movementSpeed + currTime;
-    sun.position.y = movementSpeed + currTime;
+    sun.position.x = currTime;
+    sun.position.y = currTime;
 
 
     refreshVertices();
