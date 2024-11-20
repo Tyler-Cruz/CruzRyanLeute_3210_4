@@ -134,7 +134,7 @@ addTreesToTerrain(1000);
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
-var material = new THREE.MeshLambertMaterial({color: Colors.TerrainColor});
+var material = new THREE.MeshLambertMaterial('grass.jpg');
 var terrain = new THREE.Mesh( geometry, material );
 terrain.rotation.x = -Math.PI / 2;
 scene.add( terrain );
