@@ -73,6 +73,65 @@ moon.castShadow = true;
 
 scene.add(moon);
 
+
+// creates a tree out of trunk and leaves, merges shapes together into one object
+function createTree() {
+    const trunkGeometry = new THREE.CylinderGeometry(1, 1, 8, 6);
+    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+
+    const leavesGeometry = new THREE.ConeGeometry(4, 10, 8);
+    const leavesMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
+    const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+    leaves.position.y = 7; // Position leaves above the trunk
+
+    const tree = new THREE.Group();
+    tree.add(trunk);
+    tree.add(leaves);
+
+    tree.isTree = true; // Mark this as a tree for identification
+    return tree;
+}
+
+// adds the trees to the terrain
+function addTreesToTerrain(count) {
+    const trees = [];
+    for (let i = 0; i < count; i++) {
+        const tree = createTree();
+
+        // Randomly place the tree within the terrain bounds
+        const x = (Math.random() - 0.5) * 2000; // Width of the terrain
+        const z = (Math.random() - 0.5) * 2000; // Depth of the terrain
+
+        // Use Perlin noise to adjust the tree's y-position to match the terrain
+        const perlin = new Perlin();
+        const smoothing = 300;
+        const peak = 60;
+        const y = peak * perlin.noise(x / smoothing, z / smoothing);
+
+
+        tree.position.set(x, y, z);
+        trees.push(tree);
+        scene.add(tree);
+    }
+    return trees;
+}
+// updating position of trees as terrain moves
+function updateTrees(delta) {
+    scene.children.forEach((child) => {
+        if (child.isTree) {
+            child.position.z += movementSpeed * delta;
+
+            // Reset tree position if it moves out of view
+            if (child.position.z > camera.position.z + 1000) {
+                child.position.z -= 2000; // Wrap around
+            }
+        }
+    });
+}
+
+addTreesToTerrain(1000);
+
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
 var material = new THREE.MeshLambertMaterial({color: Colors.TerrainColor});
@@ -102,6 +161,8 @@ function update() {
     terrain.position.z += movementSpeed * delta;
     camera.position.z += movementSpeed * delta;
     refreshVertices();
+
+    updateTrees(delta);
 }
 
 function render() {
