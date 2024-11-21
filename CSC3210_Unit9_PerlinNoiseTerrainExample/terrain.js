@@ -192,7 +192,7 @@ var bobbingTimer = 0;
 
 // Update camera position and bobbing effect
 function updateCameraPosition(delta) {
-    if (moveForward || moveBackward) {
+    if (moveForward || moveBackward || moveLeft || moveRight) {
         bobbing = true;
         bobbingTimer += delta * bobbingFrequency;
 
