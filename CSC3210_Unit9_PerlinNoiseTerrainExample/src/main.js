@@ -34,16 +34,16 @@ this.animate();
 keydown(event) {
     switch (event.key.toLowerCase()) {
         case "a":
-            this.sceneManager.camera.position.x -= 15
+            amera.position.x -= 15
             break;
         case "d":
-            this.sceneManager.camera.position.x += 15
+            camera.position.x += 15
             break;
         case "s":
-            this.sceneManager.camera.position.z += 15;
+            camera.position.z += 15;
             break;
         case "w":
-            this.sceneManager.camera.position.z -= 15;
+            camera.position.z -= 15;
             break;
     }
 }
