@@ -134,7 +134,7 @@ addTreesToTerrain(1000);
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
-var material = new THREE.MeshLambertMaterial('grass.jpg');
+var material = new THREE.MeshLambertMaterial("grass.jpg");
 var terrain = new THREE.Mesh( geometry, material );
 terrain.rotation.x = -Math.PI / 2;
 scene.add( terrain );
@@ -185,9 +185,24 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-// Update camera position based on movement
-var movementSpeed = 10;  // Adjust speed as needed
+var bobbing = false;  
+var bobbingAmplitude = 2; 
+var bobbingFrequency = 10; 
+var bobbingTimer = 0;  
+
+// Update camera position and bobbing effect
 function updateCameraPosition(delta) {
+    if (moveForward || moveBackward) {
+        bobbing = true;
+        bobbingTimer += delta * bobbingFrequency;
+
+        var bobbingY = Math.sin(bobbingTimer) * bobbingAmplitude;
+        camera.position.y = 70 + bobbingY; 
+    } else {
+        bobbing = false;
+    }
+
+    // Handle forward/backward 
     if (moveForward) {
         camera.position.z -= movementSpeed * delta;
     }
