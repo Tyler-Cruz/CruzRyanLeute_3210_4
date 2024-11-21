@@ -235,7 +235,7 @@ function update() {
     var delta = clock.getDelta();
     refreshVertices();
 
-    updateTrees(delta);
+    //updateTrees(delta);
     updateCameraPosition(delta);
 }
 
