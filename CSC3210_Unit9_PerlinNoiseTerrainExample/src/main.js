@@ -27,24 +27,51 @@ var stats = new Stats();
 stats.showPanel( 0 );
 document.body.appendChild( stats.dom );
 
-this.controls = new OrbitControls(this.sceneManager.camera, this.renderer.renderer.domElement);
-window.addEventListener('keydown', (event) => this.keydown(event), false);
-this.animate();
+// Variables to track camera movement
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
 
-keydown(event) {
-    switch (event.key.toLowerCase()) {
-        case "a":
-            amera.position.x -= 15
-            break;
-        case "d":
-            camera.position.x += 15
-            break;
-        case "s":
-            camera.position.z += 15;
-            break;
-        case "w":
-            camera.position.z -= 15;
-            break;
+// Setup keyboard event listeners
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'w') {
+        moveForward = true;
+    } else if (event.key === 's') {
+        moveBackward = true;
+    } else if (event.key === 'a') {
+        moveLeft = true;
+    } else if (event.key === 'd') {
+        moveRight = true;
+    }
+});
+
+document.addEventListener('keyup', (event) => {
+    if (event.key === 'w') {
+        moveForward = false;
+    } else if (event.key === 's') {
+        moveBackward = false;
+    } else if (event.key === 'a') {
+        moveLeft = false;
+    } else if (event.key === 'd') {
+        moveRight = false;
+    }
+});
+
+// Update camera position based on movement
+var movementSpeed = 10;  // Adjust speed as needed
+function updateCameraPosition(delta) {
+    if (moveForward) {
+        camera.position.z -= movementSpeed * delta;
+    }
+    if (moveBackward) {
+        camera.position.z += movementSpeed * delta;
+    }
+    if (moveLeft) {
+        camera.position.x -= movementSpeed * delta;
+    }
+    if (moveRight) {
+        camera.position.x += movementSpeed * delta;
     }
 }
 
@@ -84,6 +111,7 @@ function update() {
 
 
     refreshVertices();
+    updateCameraPosition(delta);
 }
 
 function render() {

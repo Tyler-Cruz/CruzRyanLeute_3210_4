@@ -154,6 +154,54 @@ function refreshVertices() {
     terrain.geometry.computeVertexNormals();
 }
 
+// Variables to track camera movement
+var moveForward = false;
+var moveBackward = false;
+var moveLeft = false;
+var moveRight = false;
+
+// Setup keyboard event listeners
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'w') {
+        moveForward = true;
+    } else if (event.key === 's') {
+        moveBackward = true;
+    } else if (event.key === 'a') {
+        moveLeft = true;
+    } else if (event.key === 'd') {
+        moveRight = true;
+    }
+});
+
+document.addEventListener('keyup', (event) => {
+    if (event.key === 'w') {
+        moveForward = false;
+    } else if (event.key === 's') {
+        moveBackward = false;
+    } else if (event.key === 'a') {
+        moveLeft = false;
+    } else if (event.key === 'd') {
+        moveRight = false;
+    }
+});
+
+// Update camera position based on movement
+var movementSpeed = 10;  // Adjust speed as needed
+function updateCameraPosition(delta) {
+    if (moveForward) {
+        camera.position.z -= movementSpeed * delta;
+    }
+    if (moveBackward) {
+        camera.position.z += movementSpeed * delta;
+    }
+    if (moveLeft) {
+        camera.position.x -= movementSpeed * delta;
+    }
+    if (moveRight) {
+        camera.position.x += movementSpeed * delta;
+    }
+}
+
 // central dot 
 const dot = document.createElement('div');
 dot.style.position = 'absolute';
@@ -173,6 +221,7 @@ function update() {
     refreshVertices();
 
     updateTrees(delta);
+    updateCameraPosition(delta);
 }
 
 function render() {
