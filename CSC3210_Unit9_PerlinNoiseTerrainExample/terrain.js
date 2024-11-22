@@ -73,6 +73,19 @@ moon.shadow.camera.fov = 30;
 
 scene.add(moon);
 
+var flashlight = new THREE.SpotLight(0xFFFFFF, 2, 1000, Math.PI / 4, 1, 2);
+flashlight.position.set(0, 50, 0); 
+flashlight.target = new THREE.Object3D(); 
+scene.add(flashlight);
+flashlight.castShadow = true;
+
+
+flashlight.shadow.mapSize.width = 1024;
+flashlight.shadow.mapSize.height = 1024;
+flashlight.shadow.camera.near = 500;
+flashlight.shadow.camera.far = 4000;
+flashlight.shadow.camera.fov = 30;
+
 
 // creates a tree out of trunk and leaves, merges shapes together into one object
 function createTree() {
@@ -277,6 +290,7 @@ var moveForward = false;
 var moveBackward = false;
 var moveLeft = false;
 var moveRight = false;
+var flashlightOn = false;
 
 // Setup keyboard event listeners
 document.addEventListener('keydown', (event) => {
@@ -288,6 +302,10 @@ document.addEventListener('keydown', (event) => {
         moveLeft = true;
     } else if (event.key === 'd') {
         moveRight = true;
+    }
+    else if (event.key === 'f' || event.key === 'F') {
+        flashlightOn = !flashlightOn;
+        flashlight.visible = flashlightOn; 
     }
 });
 
@@ -335,6 +353,11 @@ function updateCameraPosition(delta) {
     }
 }
 
+function updateFlashlight() {
+    flashlight.position.set(camera.position.x, camera.position.y + 50, camera.position.z); // Position flashlight relative to camera
+    flashlight.target.position.set(camera.position.x, camera.position.y, camera.position.z); // Spotlight's target also follows the camera
+}
+
 // central dot 
 const dot = document.createElement('div');
 dot.style.position = 'absolute';
@@ -355,6 +378,7 @@ function update() {
 
     //updateTrees(delta);
     updateCameraPosition(delta);
+    updateFlashlight();
 }
 
 function render() {
