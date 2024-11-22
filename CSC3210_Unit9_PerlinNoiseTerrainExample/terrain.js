@@ -7,6 +7,7 @@ const Palette = {
     CetaceanBlue: 0x070b34
 };
 
+// sky colors
 const Colors = {
     DayColor: Palette.LightBlue,
     DawnColor: Palette.Orange,
@@ -32,6 +33,8 @@ camera.position.y = 70;
 camera.position.z = 1000;
 camera.rotation.x = -15 * Math.PI / 180;
 
+
+// creating renderer
 var renderer = new THREE.WebGLRenderer();
 renderer.setClearColor(Colors.DayColor);
 renderer.setPixelRatio( window.devicePixelRatio );
@@ -46,6 +49,8 @@ document.body.appendChild( stats.dom );
 // light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
 // scene.add(light);
 
+
+// creation of sun
 const sun = new THREE.SpotLight(0xFDB813);
 sun.position.set(10, 450, 50);
 
@@ -62,7 +67,7 @@ scene.add(sun);
 const sHelper = new THREE.SpotLightHelper(sun);
 scene.add(sHelper);
 
-//creating the moon
+// creating the moon
 const moon = new THREE.SpotLight(0xF6F1D5);
 moon.position.set(-50,-50,-50);
 
@@ -80,6 +85,8 @@ scene.add(moon);
 const mHelper = new THREE.SpotLightHelper(moon);
 scene.add(mHelper);
 
+
+// creating flashlight
 var flashlight = new THREE.SpotLight(0xFFFFFF, 2, 1000, Math.PI / 4, 1, 2);
 flashlight.position.set(0, 50, 0); 
 flashlight.target = new THREE.Object3D(); 
@@ -98,7 +105,7 @@ function addBoundingBoxToTree(tree) {
     tree.boundingBox = box;
 }
 
-// creates a tree out of trunk and leaves, merges shapes together into one object
+// creates pine trees with cone leaf pattern
 function createTree() {
     const trunkGeometry = new THREE.CylinderGeometry(2, 2, 100, 8);
     const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
@@ -157,6 +164,7 @@ function updateTrees(delta) {
 
 addTreesToTerrain(10);
 
+// creating flowers
 function createTree2() {
     const trunkHeight = Math.random() * 10 + 5;  
     const trunkRadius = Math.random() * 0.5 + 0.3; 
@@ -196,6 +204,7 @@ function createTree2() {
     return tree;
 }
 
+// adds flowers to terrain
 function addTrees2(count) {
     const trees = [];
     for (let i = 0; i < count; i++) {
@@ -222,6 +231,8 @@ function addTrees2(count) {
 // Add stochastic trees to the terrain
 addTrees2(10);  
 
+
+// creates trees with spherical leaf pattern
 function createTree3() {
     const trunkHeight = Math.random() * 80 + 5;  
     const trunkRadius = Math.random() * 1 + 0.5; 
@@ -251,6 +262,8 @@ function createTree3() {
     return tree;
 }
 
+
+// adding trees to terrain
 function addTrees3(count) {
     const trees = [];
     for (let i = 0; i < count; i++) {
@@ -277,6 +290,8 @@ function addTrees3(count) {
 // Add stochastic trees to the terrain
 addTrees3(50);  
 
+
+// creating textureLoader to load terrain texture
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load('grass.jpg');
 
@@ -326,6 +341,8 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+
+// WASD controls for movement
 document.addEventListener('keyup', (event) => {
     if (event.key === 'w') {
         moveForward = false;
@@ -362,12 +379,15 @@ function updateCameraRotation() {
     camera.rotation.x = -mouseY * Math.PI * sensitivity; // Vertical rotation
 }
 
+// above and beyond: camera bobbing
+
+// variables to create bobbing
 var bobbing = false;  
 var bobbingAmplitude = 2; 
 var bobbingFrequency = 10; 
 var bobbingTimer = 0;  
 
-// Update camera position and bobbing effect
+// Update camera position and implement bobbing effect
 function updateCameraPosition(delta) {
     if (moveForward || moveBackward || moveLeft || moveRight) {
         bobbing = true;
@@ -379,7 +399,7 @@ function updateCameraPosition(delta) {
         bobbing = false;
     }
 
-    // Handle forward/backward 
+    // camera movement with mouse forward/backward/sideways
     if (moveForward) {
         camera.position.z -= movementSpeed * delta;
     }
@@ -394,12 +414,13 @@ function updateCameraPosition(delta) {
     }
 }
 
+// updating flashlight
 function updateFlashlight() {
     flashlight.position.set(camera.position.x, camera.position.y + 50, camera.position.z); // Position flashlight relative to camera
     flashlight.target.position.set(camera.position.x, camera.position.y, camera.position.z); // Spotlight's target also follows the camera
 }
 
-// central dot 
+// central dot cursor view
 const dot = document.createElement('div');
 dot.style.position = 'absolute';
 dot.style.width = '8px';
@@ -411,11 +432,14 @@ dot.style.top = '50%';
 dot.style.transform = 'translate(-50%, -50%)';
 document.body.appendChild(dot);
 
+
 var clock = new THREE.Clock();
 var movementSpeed = 60;
 
 let timeOfDay = 0; // 0 to 1, where 0 is night and 1 is day
 
+
+// function to update sky color to create sun/moon cycle
 function updateSkyColor() {
     timeOfDay = (sun.position.x + 500) / 1000; 
 
@@ -437,9 +461,13 @@ function updateSkyColor() {
     renderer.setClearColor(skyColor);
 }
 
+
+// initializing raycaster
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
+
+// function to update all areas of code
 function update() {
     var delta = clock.getDelta();
     refreshVertices();
@@ -477,10 +505,14 @@ function update() {
     updateCameraRotation();
 }
 
+
+// render function
 function render() {
     renderer.render( scene, camera );
 }
 
+
+// animation loop
 function loop() {
     stats.begin();
     update();
@@ -494,6 +526,8 @@ loop();
 /*jshint esversion: 6 */
 //credit: https://gist.github.com/banksean/304522#file-perlin-noise-simplex-js
 
+
+// Perlin class for terrain creation using Perlin noise
 class Perlin {
     constructor() {
         this.grad3 =    
