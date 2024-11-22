@@ -148,19 +148,6 @@ function addTreesToTerrain(count) {
     }
     return trees;
 }
-// updating position of trees as terrain moves
-function updateTrees(delta) {
-    scene.children.forEach((child) => {
-        if (child.isTree) {
-            child.position.z += movementSpeed * delta;
-
-            // Reset tree position if it moves out of view
-            if (child.position.z > camera.position.z + 1000) {
-                child.position.z -= 2000; // Wrap around
-            }
-        }
-    });
-}
 
 addTreesToTerrain(25);
 
@@ -524,13 +511,6 @@ function update() {
      
     }
 
-    //changes the sun color during the cycle (freezes everything when uncommented)
-    // if(sun.position.x = -500 || sun.position.x = 400){
-    //     sun.Colors = Pink;
-    // }else{
-    //     sun.Colors = Orange;
-    // }
-
     //handles moon cycle
     moon.position.x += delta * -10;
     if(moon.position.x <= -510){
@@ -542,7 +522,7 @@ function update() {
     updateSkyColor();
 
 
-    //updateTrees(delta);
+
     updateCameraPosition(delta);
     updateFlashlight();
     updateCameraRotation();
