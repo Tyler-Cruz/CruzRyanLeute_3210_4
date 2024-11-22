@@ -488,6 +488,59 @@ function updateSkyColor() {
 // initializing raycaster
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
+let intersectedObject = null;
+
+document.addEventListener('mousemove', (event) => {
+    const halfWidth = window.innerWidth / 2;
+    const halfHeight = window.innerHeight / 2;
+
+    // Normalize mouse position to a range of -1 to 1
+    mouse.x = (event.clientX - halfWidth) / halfWidth;
+    mouse.y = -(event.clientY - halfHeight) / halfHeight;
+});
+
+function checkHover() {
+    // Cast a ray from the camera in the direction of the mouse
+    raycaster.setFromCamera(mouse, camera);
+
+    // Find objects intersected by the ray
+    const trees = scene.children.filter(child => child.isTree);
+    const intersects = raycaster.intersectObjects(trees);
+
+    // If the ray hits an object, it's a tree
+    if (intersects.length > 0) {
+        const object = intersects[0].object;
+
+        // Check if it's a tree and if it's different from the previous one
+        if (object !== intersectedObject) {
+            // Reset color of the previous tree if there was one
+            if (intersectedObject) {
+                intersectedObject.children.forEach(child => {
+                    if (child.material) {
+                        child.material.color.set(intersectedObject.originalColor);
+                    }
+                });
+            }
+
+            // Store the original color and change to red
+            intersectedObject = object;
+            intersectedObject.originalColor = object.children[0].material.color.getHex(); // Assuming trunk is the first child
+            object.children.forEach(child => {
+                if (child.material) {
+                    child.material.color.set(0xFF0000); // Set color to red
+                }
+            });
+        }
+    } else if (intersectedObject) {
+        // If no intersection, reset the color of the last highlighted tree
+        intersectedObject.children.forEach(child => {
+            if (child.material) {
+                child.material.color.set(intersectedObject.originalColor);
+            }
+        });
+        intersectedObject = null;
+    }
+}
 
 
 // function to update all areas of code
@@ -538,6 +591,7 @@ function render() {
 // animation loop
 function loop() {
     stats.begin();
+    checkHover();
     update();
     render();
     stats.end();
