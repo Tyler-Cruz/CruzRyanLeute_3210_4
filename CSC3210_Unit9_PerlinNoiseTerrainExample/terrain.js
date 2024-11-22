@@ -524,7 +524,7 @@ function checkHover() {
 
             // Store the original color and change to red
             intersectedObject = object;
-            intersectedObject.originalColor = object.children[0].material.color.getHex(); // Assuming trunk is the first child
+            intersectedObject.originalColor = object.children[0].material.color.getHex(); 
             object.children.forEach(child => {
                 if (child.material) {
                     child.material.color.set(0xFF0000); // Set color to red
