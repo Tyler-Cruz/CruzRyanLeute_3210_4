@@ -39,6 +39,7 @@ var renderer = new THREE.WebGLRenderer();
 renderer.setClearColor(Colors.DayColor);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( width, height );
+renderer.shadowMap.enabled = true;
 document.body.appendChild( renderer.domElement );
 
 var stats = new Stats();
