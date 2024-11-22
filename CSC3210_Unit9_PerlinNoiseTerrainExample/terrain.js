@@ -221,7 +221,7 @@ addTrees2(50);
 
 // creates trees with spherical leaf pattern
 function createTree3() {
-    const trunkHeight = Math.random() * 80 + 5;  
+    const trunkHeight = Math.random() * 110 + 5;  
     const trunkRadius = Math.random() * 1 + 0.5; 
     const leafSize = Math.random() * 8 + 4;  
     const branchCount = Math.floor(Math.random() * 4 + 2);  
