@@ -93,6 +93,10 @@ flashlight.shadow.camera.near = 500;
 flashlight.shadow.camera.far = 4000;
 flashlight.shadow.camera.fov = 30;
 
+function addBoundingBoxToTree(tree) {
+    const box = new THREE.Box3().setFromObject(tree);
+    tree.boundingBox = box;
+}
 
 // creates a tree out of trunk and leaves, merges shapes together into one object
 function createTree() {
@@ -122,6 +126,7 @@ function addTreesToTerrain(count) {
         // Randomly place the tree within the terrain bounds
         const x = (Math.random() - 0.5) * 2000; // Width of the terrain
         const z = (Math.random() - 0.5) * 2000; // Depth of the terrain
+        addBoundingBoxToTree(tree);
 
         // Use Perlin noise to adjust the tree's y-position to match the terrain
         const perlin = new Perlin();
@@ -199,6 +204,7 @@ function addTrees2(count) {
         // Randomly place the tree within the terrain bounds
         const x = (Math.random() - 0.5) * 2000; // Width of the terrain
         const z = (Math.random() - 0.5) * 2000; // Depth of the terrain
+        addBoundingBoxToTree(tree);
 
         // Use Perlin noise to adjust the tree's y-position to match the terrain surface
         const perlin = new Perlin();
@@ -253,6 +259,7 @@ function addTrees3(count) {
         // Randomly place the tree within the terrain bounds
         const x = (Math.random() - 0.5) * 2000; // Width of the terrain
         const z = (Math.random() - 0.5) * 2000; // Depth of the terrain
+        addBoundingBoxToTree(tree);
 
         // Use Perlin noise to adjust the tree's y-position to match the terrain surface
         const perlin = new Perlin();
