@@ -131,7 +131,7 @@ function addTreesToTerrain(count) {
         // Use Perlin noise to adjust the tree's y-position to match the terrain
         const perlin = new Perlin();
         const smoothing = 300;
-        const peak = 60;
+        const peak = 20;
         const y = peak * perlin.noise(x / smoothing, z / smoothing);
 
 
@@ -209,7 +209,7 @@ function addTrees2(count) {
         // Use Perlin noise to adjust the tree's y-position to match the terrain surface
         const perlin = new Perlin();
         const smoothing = 300;
-        const peak = 60;
+        const peak = 20;
         const y = peak * perlin.noise(x / smoothing, z / smoothing);
 
         tree.position.set(x, y, z);
@@ -264,7 +264,7 @@ function addTrees3(count) {
         // Use Perlin noise to adjust the tree's y-position to match the terrain surface
         const perlin = new Perlin();
         const smoothing = 300;
-        const peak = 60;
+        const peak = 20;
         const y = peak * perlin.noise(x / smoothing, z / smoothing);
 
         tree.position.set(x, y, z);
