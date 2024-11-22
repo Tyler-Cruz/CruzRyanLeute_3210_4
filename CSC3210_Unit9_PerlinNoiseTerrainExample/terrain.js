@@ -100,11 +100,11 @@ function addBoundingBoxToTree(tree) {
 
 // creates a tree out of trunk and leaves, merges shapes together into one object
 function createTree() {
-    const trunkGeometry = new THREE.CylinderGeometry(1, 1, 8, 6);
+    const trunkGeometry = new THREE.CylinderGeometry(2, 2, 100, 8);
     const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
     const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
 
-    const leavesGeometry = new THREE.ConeGeometry(4, 10, 8);
+    const leavesGeometry = new THREE.ConeGeometry(20, 120, 70);
     const leavesMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
     const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
     leaves.position.y = 7; // Position leaves above the trunk
@@ -155,7 +155,7 @@ function updateTrees(delta) {
     });
 }
 
-addTreesToTerrain(800);
+addTreesToTerrain(10);
 
 function createTree2() {
     const trunkHeight = Math.random() * 10 + 5;  
@@ -220,26 +220,26 @@ function addTrees2(count) {
 }
 
 // Add stochastic trees to the terrain
-addTrees2(1000);  
+addTrees2(10);  
 
 function createTree3() {
-    const trunkHeight = Math.random() * 10 + 5;  
-    const trunkRadius = Math.random() * 0.5 + 0.5; 
+    const trunkHeight = Math.random() * 80 + 5;  
+    const trunkRadius = Math.random() * 1 + 0.5; 
     const leafSize = Math.random() * 2 + 4;  
     const branchCount = Math.floor(Math.random() * 4 + 2);  
     const branchAngle = Math.random() * 20 + 15;  
-    const leafColor = Math.random() * 0xFFFFFF;
+    const leafColor = Math.random() * 0x00FF00;
 
     // Create the trunk
     const trunkGeometry = new THREE.CylinderGeometry(trunkRadius, trunkRadius, trunkHeight, 6);
-    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
     const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
 
     
-    const leavesGeometry = new THREE.SphereGeometry(leafSize, leafSize * 2, 8);
+    const leavesGeometry = new THREE.SphereGeometry(leafSize, leafSize * 50, 28);
     const leavesMaterial = new THREE.MeshLambertMaterial({ color: leafColor });
     const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
-    leaves.position.y = trunkHeight * 0.75; 
+    leaves.position.y = trunkHeight * 0.5; 
 
     // Combine trunk and leaves into a tree object
     const tree = new THREE.Group();
@@ -275,7 +275,7 @@ function addTrees3(count) {
 }
 
 // Add stochastic trees to the terrain
-addTrees3(1000);  
+addTrees3(50);  
 
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load('grass.jpg');
