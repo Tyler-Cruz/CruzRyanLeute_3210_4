@@ -429,6 +429,8 @@ function updateSkyColor() {
     renderer.setClearColor(skyColor);
 }
 
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
 function update() {
     var delta = clock.getDelta();
