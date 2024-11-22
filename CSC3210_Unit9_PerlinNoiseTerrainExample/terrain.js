@@ -154,13 +154,13 @@ addTreesToTerrain(800);
 
 function createTree2() {
     const trunkHeight = Math.random() * 10 + 5;  
-    const trunkRadius = Math.random() * 0.5 + 0.5; 
-    const branchCount = Math.floor(Math.random() * 4 + 2);  
-    const branchAngle = Math.random() * 20 + 15;  
+    const trunkRadius = Math.random() * 0.5 + 0.3; 
+    const branchCount = Math.floor(Math.random() * 6 + 4);  
+    const branchAngle = Math.random() * 30 + 30;  
 
     // Create the trunk
-    const trunkGeometry = new THREE.CylinderGeometry(trunkRadius, trunkRadius, trunkHeight, 6);
-    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+    const trunkGeometry = new THREE.CylinderGeometry(trunkRadius, trunkRadius, trunkHeight, 9);
+    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x4B9F6F });
     const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
 
 
@@ -170,17 +170,18 @@ function createTree2() {
 
     // Add branches
     for (let i = 0; i < branchCount; i++) {
-        const branchLength = Math.random() * 10 + 10;  
-        const branchAngleOffset = (Math.random() - 0.5) * branchAngle;
+        const branchLength = Math.random() * 5 + 5;  
+        const branchAngleOffsetX = (Math.random() - 0.5) * branchAngle; 
+        const branchAngleOffsetY = (Math.random() - 0.5) * branchAngle;
         
         // Create a branch geometry
         const branchGeometry = new THREE.CylinderGeometry(0.2, 0.5, branchLength, 6);
-        const branchMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+        const branchMaterial = new THREE.MeshLambertMaterial({ color: 0xFF69B4 });
         const branch = new THREE.Mesh(branchGeometry, branchMaterial);
 
         // Randomize branch positioning and rotation
-        branch.position.set(Math.random() * 2 - 1, trunkHeight * 0.75, Math.random() * 2 - 1);
-        branch.rotation.set(branchAngleOffset, branchAngleOffset, 0);
+        branch.position.set(0, trunkHeight * 0.7, 0); 
+        branch.rotation.set(branchAngleOffsetX, branchAngleOffsetY, 0);
 
         // Add branches to tree
         tree.add(branch);
