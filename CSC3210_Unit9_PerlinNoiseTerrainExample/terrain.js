@@ -322,6 +322,30 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
+
+// Variables to track mouse position
+let mouseX = 0;
+let mouseY = 0;
+
+// Sensitivity of the camera movement
+const sensitivity = 0.05;
+
+// Event listener for mouse movement
+document.addEventListener('mousemove', (event) => {
+    const halfWidth = window.innerWidth / 2;
+    const halfHeight = window.innerHeight / 2;
+
+    // Normalize mouse position to a range of -1 to 1
+    mouseX = (event.clientX - halfWidth) / halfWidth;
+    mouseY = (event.clientY - halfHeight) / halfHeight;
+});
+
+// Update camera rotation based on mouse movement
+function updateCameraRotation() {
+    camera.rotation.y = mouseX * Math.PI * sensitivity; // Horizontal rotation
+    camera.rotation.x = -mouseY * Math.PI * sensitivity; // Vertical rotation
+}
+
 var bobbing = false;  
 var bobbingAmplitude = 2; 
 var bobbingFrequency = 10; 
@@ -373,6 +397,7 @@ document.body.appendChild(dot);
 
 var clock = new THREE.Clock();
 var movementSpeed = 60;
+
 function update() {
     var delta = clock.getDelta();
     refreshVertices();
@@ -380,6 +405,7 @@ function update() {
     //updateTrees(delta);
     updateCameraPosition(delta);
     updateFlashlight();
+    updateCameraRotation();
 }
 
 function render() {
