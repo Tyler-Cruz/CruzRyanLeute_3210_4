@@ -434,6 +434,22 @@ function update() {
         sun.position.y = 450;
     }
 
+    // Update sky color based on sun's position
+    var skyColor;
+    if (sun.position.x > 0) {
+        // Daytime
+        skyColor = Colors.DayColor;
+    } else if (sun.position.x > -500) {
+        // Dusk 
+        skyColor = Colors.DuskColor;
+    } else {
+        // Nighttime
+        skyColor = Colors.NightColor;
+    }
+
+    // Smoothly transition the background color
+    renderer.setClearColor(skyColor, 1); 
+
 
 
     //updateTrees(delta);
