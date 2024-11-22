@@ -29,7 +29,7 @@ var height = window.innerHeight;
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, width / height, 1, 3000);
 var cameraTarget = {x:0, y:0, z:0};
-camera.position.y = 70;
+camera.position.y = 35;
 camera.position.z = 1000;
 camera.rotation.x = -15 * Math.PI / 180;
 
@@ -324,6 +324,8 @@ var moveLeft = false;
 var moveRight = false;
 var flashlightOn = false;
 
+
+// WASD controls for movement
 // Setup keyboard event listeners
 document.addEventListener('keydown', (event) => {
     if (event.key === 'w') {
@@ -342,7 +344,6 @@ document.addEventListener('keydown', (event) => {
 });
 
 
-// WASD controls for movement
 document.addEventListener('keyup', (event) => {
     if (event.key === 'w') {
         moveForward = false;
@@ -378,6 +379,41 @@ function updateCameraRotation() {
     camera.rotation.y = mouseX * Math.PI * sensitivity; // Horizontal rotation
     camera.rotation.x = -mouseY * Math.PI * sensitivity; // Vertical rotation
 }
+// creating bounding box for camera
+function getCameraBoundingBox() {
+    const cameraPosition = camera.position;
+    const size = 5; // Adjust size as needed
+    return new THREE.Box3(
+        new THREE.Vector3(cameraPosition.x - size, cameraPosition.y - size, cameraPosition.z - size),
+        new THREE.Vector3(cameraPosition.x + size, cameraPosition.y + size, cameraPosition.z + size)
+    );
+}
+
+// checking collision with camera box and tree boxes
+function checkCollisionAndBounce(delta) {
+    const cameraBox = getCameraBoundingBox();
+    scene.children.forEach((child) => {
+        if (child.isTree && child.boundingBox) {
+            if (cameraBox.intersectsBox(child.boundingBox)) {
+                // Collision detected
+                const collisionNormal = new THREE.Vector3()
+                    .subVectors(camera.position, child.position)
+                    .normalize();
+                
+                const bounceStrength = 1000; // Adjust bounce strength
+                camera.position.addScaledVector(collisionNormal, bounceStrength * delta);
+            }
+        }
+    });
+}
+// updating tree bounding boxes
+function updateTreeBoundingBoxes() {
+    scene.children.forEach((child) => {
+        if (child.isTree && child.boundingBox) {
+            child.boundingBox.setFromObject(child);
+        }
+    });
+}
 
 // above and beyond: camera bobbing
 
@@ -394,7 +430,7 @@ function updateCameraPosition(delta) {
         bobbingTimer += delta * bobbingFrequency;
 
         var bobbingY = Math.sin(bobbingTimer) * bobbingAmplitude;
-        camera.position.y = 70 + bobbingY; 
+        camera.position.y = 35 + bobbingY; 
     } else {
         bobbing = false;
     }
@@ -471,6 +507,13 @@ const mouse = new THREE.Vector2();
 function update() {
     var delta = clock.getDelta();
     refreshVertices();
+
+    updateTreeBoundingBoxes();
+    checkCollisionAndBounce(delta);
+
+    renderer.render(scene, camera);
+    stats.update();
+    
 
     //handles sun cycle
     sun.position.x += delta * -10;
