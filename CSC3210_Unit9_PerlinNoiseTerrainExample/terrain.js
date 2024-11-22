@@ -45,10 +45,6 @@ var stats = new Stats();
 stats.showPanel( 0 );
 document.body.appendChild( stats.dom );
 
-// var light = new THREE.DirectionalLight(Colors.LightColor, 1.3);
-// light.position.set(camera.position.x, camera.position.y+500, camera.position.z+500).normalize();
-// scene.add(light);
-
 
 // creation of sun
 const sun = new THREE.SpotLight(0xFDB813);
@@ -149,7 +145,7 @@ function addTreesToTerrain(count) {
     return trees;
 }
 
-addTreesToTerrain(25);
+addTreesToTerrain(30);
 
 // creating flowers
 function createTree2() {
@@ -216,7 +212,7 @@ function addTrees2(count) {
 }
 
 // Add stochastic trees to the terrain
-addTrees2(50);  
+addTrees2(75);  
 
 
 // creates trees with spherical leaf pattern
@@ -275,7 +271,7 @@ function addTrees3(count) {
 }
 
 // Add stochastic trees to the terrain
-addTrees3(50);  
+addTrees3(75);  
 
 
 // creating textureLoader to load terrain texture
