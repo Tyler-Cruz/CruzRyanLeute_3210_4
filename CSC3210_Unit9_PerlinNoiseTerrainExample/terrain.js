@@ -263,10 +263,12 @@ function addTrees3(count) {
 // Add stochastic trees to the terrain
 addTrees3(1000);  
 
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('grass.jpg');
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
-var material = new THREE.MeshLambertMaterial("grass.jpg");
+var material = new THREE.MeshBasicMaterial({ map: texture });
 var terrain = new THREE.Mesh( geometry, material );
 terrain.rotation.x = -Math.PI / 2;
 scene.add( terrain );
