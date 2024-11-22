@@ -107,11 +107,11 @@ function addBoundingBoxToTree(tree) {
 
 // creates pine trees with cone leaf pattern
 function createTree() {
-    const trunkGeometry = new THREE.CylinderGeometry(2, 2, 100, 8);
+    const trunkGeometry = new THREE.CylinderGeometry(3, 3, 10);
     const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
     const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
 
-    const leavesGeometry = new THREE.ConeGeometry(20, 120, 70);
+    const leavesGeometry = new THREE.ConeGeometry(20, 120);
     const leavesMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
     const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
     leaves.position.y = 7; // Position leaves above the trunk
@@ -162,11 +162,11 @@ function updateTrees(delta) {
     });
 }
 
-addTreesToTerrain(10);
+addTreesToTerrain(25);
 
 // creating flowers
 function createTree2() {
-    const trunkHeight = Math.random() * 10 + 5;  
+    const trunkHeight = Math.random() * 25 + 5;  
     const trunkRadius = Math.random() * 0.5 + 0.3; 
     const branchCount = Math.floor(Math.random() * 6 + 4);  
     const branchAngle = Math.random() * 30 + 30;  
@@ -229,14 +229,14 @@ function addTrees2(count) {
 }
 
 // Add stochastic trees to the terrain
-addTrees2(10);  
+addTrees2(50);  
 
 
 // creates trees with spherical leaf pattern
 function createTree3() {
     const trunkHeight = Math.random() * 80 + 5;  
     const trunkRadius = Math.random() * 1 + 0.5; 
-    const leafSize = Math.random() * 2 + 4;  
+    const leafSize = Math.random() * 8 + 4;  
     const branchCount = Math.floor(Math.random() * 4 + 2);  
     const branchAngle = Math.random() * 20 + 15;  
     const leafColor = Math.random() * 0x00FF00;
