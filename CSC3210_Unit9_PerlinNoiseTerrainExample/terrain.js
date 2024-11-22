@@ -47,7 +47,7 @@ document.body.appendChild( stats.dom );
 // scene.add(light);
 
 const sun = new THREE.SpotLight(0xFDB813);
-sun.position.set(100, 1000, 100);
+sun.position.set(10, 450, 50);
 
 sun.castShadow = true;
 
@@ -58,6 +58,9 @@ sun.shadow.camera.near = 500;
 sun.shadow.camera.far = 4000;
 sun.shadow.camera.fov = 30;
 scene.add(sun);
+
+const sHelper = new THREE.SpotLightHelper(sun);
+scene.add(sHelper);
 
 //creating the moon
 const moon = new THREE.SpotLight(0xF6F1D5);
@@ -73,6 +76,9 @@ moon.shadow.camera.far = 4000;
 moon.shadow.camera.fov = 30;
 
 scene.add(moon);
+
+const mHelper = new THREE.SpotLightHelper(moon);
+scene.add(mHelper);
 
 var flashlight = new THREE.SpotLight(0xFFFFFF, 2, 1000, Math.PI / 4, 1, 2);
 flashlight.position.set(0, 50, 0); 
@@ -403,6 +409,32 @@ var movementSpeed = 60;
 function update() {
     var delta = clock.getDelta();
     refreshVertices();
+
+    //handles sun cycle
+    sun.position.x += delta * -10;
+    if(sun.position.x <= -500){
+        sun.position.y += delta * -10;
+        moon.position.x = 1000;
+        moon.position.y = 450;
+     
+    }
+
+    //changes the sun color during the cycle (freezes everything when uncommented)
+    // if(sun.position.x = -500 || sun.position.x = 400){
+    //     sun.Colors = Pink;
+    // }else{
+    //     sun.Colors = Orange;
+    // }
+
+    //handles moon cycle
+    moon.position.x += delta * -10;
+    if(moon.position.x <= -510){
+        moon.position.y += delta * -10;
+        sun.position.x = 1000;
+        sun.position.y = 450;
+    }
+
+
 
     //updateTrees(delta);
     updateCameraPosition(delta);
