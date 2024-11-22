@@ -153,7 +153,7 @@ function createTree2() {
 
     // Create the trunk
     const trunkGeometry = new THREE.CylinderGeometry(trunkRadius, trunkRadius, trunkHeight, 6);
-    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
     const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
 
 
@@ -163,7 +163,7 @@ function createTree2() {
 
     // Add branches
     for (let i = 0; i < branchCount; i++) {
-        const branchLength = Math.random() * 3 + 10;  
+        const branchLength = Math.random() * 10 + 10;  
         const branchAngleOffset = (Math.random() - 0.5) * branchAngle;
         
         // Create a branch geometry
