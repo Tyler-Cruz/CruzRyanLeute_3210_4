@@ -130,7 +130,125 @@ function updateTrees(delta) {
     });
 }
 
-addTreesToTerrain(1000);
+addTreesToTerrain(800);
+
+function createTree2() {
+    const trunkHeight = Math.random() * 10 + 5;  
+    const trunkRadius = Math.random() * 0.5 + 0.5; 
+    const branchCount = Math.floor(Math.random() * 4 + 2);  
+    const branchAngle = Math.random() * 20 + 15;  
+
+    // Create the trunk
+    const trunkGeometry = new THREE.CylinderGeometry(trunkRadius, trunkRadius, trunkHeight, 6);
+    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+
+
+    // tree object
+    const tree = new THREE.Group();
+    tree.add(trunk);
+
+    // Add branches
+    for (let i = 0; i < branchCount; i++) {
+        const branchLength = Math.random() * 3 + 10;  
+        const branchAngleOffset = (Math.random() - 0.5) * branchAngle;
+        
+        // Create a branch geometry
+        const branchGeometry = new THREE.CylinderGeometry(0.2, 0.5, branchLength, 6);
+        const branchMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+        const branch = new THREE.Mesh(branchGeometry, branchMaterial);
+
+        // Randomize branch positioning and rotation
+        branch.position.set(Math.random() * 2 - 1, trunkHeight * 0.75, Math.random() * 2 - 1);
+        branch.rotation.set(branchAngleOffset, branchAngleOffset, 0);
+
+        // Add branches to tree
+        tree.add(branch);
+    }
+
+    tree.isTree = true; 
+    return tree;
+}
+
+function addTrees2(count) {
+    const trees = [];
+    for (let i = 0; i < count; i++) {
+        const tree = createTree2();
+
+        // Randomly place the tree within the terrain bounds
+        const x = (Math.random() - 0.5) * 2000; // Width of the terrain
+        const z = (Math.random() - 0.5) * 2000; // Depth of the terrain
+
+        // Use Perlin noise to adjust the tree's y-position to match the terrain surface
+        const perlin = new Perlin();
+        const smoothing = 300;
+        const peak = 60;
+        const y = peak * perlin.noise(x / smoothing, z / smoothing);
+
+        tree.position.set(x, y, z);
+        trees.push(tree);
+        scene.add(tree);
+    }
+    return trees;
+}
+
+// Add stochastic trees to the terrain
+addTrees2(1000);  
+
+function createTree3() {
+    const trunkHeight = Math.random() * 10 + 5;  
+    const trunkRadius = Math.random() * 0.5 + 0.5; 
+    const leafSize = Math.random() * 2 + 4;  
+    const branchCount = Math.floor(Math.random() * 4 + 2);  
+    const branchAngle = Math.random() * 20 + 15;  
+    const leafColor = Math.random() * 0xFFFFFF;
+
+    // Create the trunk
+    const trunkGeometry = new THREE.CylinderGeometry(trunkRadius, trunkRadius, trunkHeight, 6);
+    const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+    const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+
+    
+    const leavesGeometry = new THREE.SphereGeometry(leafSize, leafSize * 2, 8);
+    const leavesMaterial = new THREE.MeshLambertMaterial({ color: leafColor });
+    const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+    leaves.position.y = trunkHeight * 0.75; 
+
+    // Combine trunk and leaves into a tree object
+    const tree = new THREE.Group();
+    tree.add(trunk);
+    tree.add(leaves);
+
+
+    tree.isTree = true; 
+    return tree;
+}
+
+function addTrees3(count) {
+    const trees = [];
+    for (let i = 0; i < count; i++) {
+        const tree = createTree3();
+
+        // Randomly place the tree within the terrain bounds
+        const x = (Math.random() - 0.5) * 2000; // Width of the terrain
+        const z = (Math.random() - 0.5) * 2000; // Depth of the terrain
+
+        // Use Perlin noise to adjust the tree's y-position to match the terrain surface
+        const perlin = new Perlin();
+        const smoothing = 300;
+        const peak = 60;
+        const y = peak * perlin.noise(x / smoothing, z / smoothing);
+
+        tree.position.set(x, y, z);
+        trees.push(tree);
+        scene.add(tree);
+    }
+    return trees;
+}
+
+// Add stochastic trees to the terrain
+addTrees3(1000);  
+
 
 // Setup the terrain
 var geometry = new THREE.PlaneBufferGeometry( 2000, 2000, 256, 256 );
