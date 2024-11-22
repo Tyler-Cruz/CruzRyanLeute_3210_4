@@ -14,6 +14,7 @@ const Colors = {
     NightColor: Palette.CetaceanBlue
 };
 
+
 exports.Colors = Colors;
 },{}],2:[function(require,module,exports){
 /*jshint esversion: 6 */
