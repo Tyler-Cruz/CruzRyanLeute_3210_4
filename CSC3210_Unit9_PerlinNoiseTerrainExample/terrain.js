@@ -406,6 +406,30 @@ document.body.appendChild(dot);
 var clock = new THREE.Clock();
 var movementSpeed = 60;
 
+let timeOfDay = 0; // 0 to 1, where 0 is night and 1 is day
+
+function updateSkyColor() {
+    timeOfDay = (sun.position.x + 500) / 1000; 
+
+    timeOfDay = Math.min(Math.max(timeOfDay, 0), 1);
+
+    let skyColor;
+
+    if (timeOfDay < 0.25) { 
+        skyColor = new THREE.Color(Colors.DawnColor);
+    } else if (timeOfDay < 0.75) { 
+        skyColor = new THREE.Color(Colors.DayColor);
+    } else if (timeOfDay < 1) {
+        skyColor = new THREE.Color(Colors.DuskColor);
+    } else { // Night
+        skyColor = new THREE.Color(Colors.NightColor);
+    }
+
+    // set the sky color based on the time of day
+    renderer.setClearColor(skyColor);
+}
+
+
 function update() {
     var delta = clock.getDelta();
     refreshVertices();
@@ -434,22 +458,7 @@ function update() {
         sun.position.y = 450;
     }
 
-    // Update sky color based on sun's position
-    var skyColor;
-    if (sun.position.x > 0) {
-        // Daytime
-        skyColor = Colors.DayColor;
-    } else if (sun.position.x > -500) {
-        // Dusk 
-        skyColor = Colors.DuskColor;
-    } else {
-        // Nighttime
-        skyColor = Colors.NightColor;
-    }
-
-    // Smoothly transition the background color
-    renderer.setClearColor(skyColor, 1); 
-
+    updateSkyColor();
 
 
     //updateTrees(delta);
